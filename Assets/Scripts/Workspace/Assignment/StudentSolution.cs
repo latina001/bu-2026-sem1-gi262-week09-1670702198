@@ -96,12 +96,35 @@ namespace Assignment
 
         public string ASN01_ReverseString(string str)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(str))
+                return str;
+
+            var stack = new Stack<char>();
+
+            foreach (char c in str)
+                stack.Push(c);
+
+            var result = new System.Text.StringBuilder(str.Length);
+            while (stack.Count > 0)
+                result.Append(stack.Pop());
+
+            return result.ToString();
         }
 
         public bool ASN02_StackPalindrome(string str)
         {
-            throw new NotImplementedException();
+            /* string reversed = ASN01_ReverseString(str);
+             return str == reversed;*/
+            var stack = new Stack<char>();
+            foreach (char c in str)
+                stack.Push(c);
+
+            foreach (char c in str)
+            {
+                if (stack.Pop() != c)
+                    return false;
+            }
+            return true;
         }
 
         #endregion
@@ -110,7 +133,31 @@ namespace Assignment
 
         public bool EX01_ParenthesesChecker(string str)
         {
-            throw new NotImplementedException();
+            var stack = new Stack<char>();
+
+            foreach (char c in str)
+            {
+                if (c == '(' || c == '[' || c == '{')
+                {
+                    stack.Push(c);
+                }
+                else if (c == ')' || c == ']' || c == '}')
+                {
+                    if (stack.Count == 0)
+                        return false;
+
+                    char open = stack.Pop();
+
+                    if ((c == ')' && open != '(') ||
+                        (c == ']' && open != '[') ||
+                        (c == '}' && open != '{'))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return stack.Count == 0;
         }
 
         #endregion
